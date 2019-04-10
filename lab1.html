@@ -39,7 +39,21 @@
         <div class="mdl-cell mdl-cell--1-col">
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input class="mdl-textfield__input" type="text" pattern="[0-9]+" id="speed" value="10">
-            <label class="mdl-textfield__label" for="limit">Speed of plot update</label>
+            <label class="mdl-textfield__label" for="speed">Speed of plot update</label>
+            <span class="mdl-textfield__error">Invalid</span>
+          </div>
+        </div>
+        <div class="mdl-cell mdl-cell--1-col">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" pattern="[0-9]+" id="limit" value="0">
+            <label class="mdl-textfield__label" for="limit">Error limit</label>
+            <span class="mdl-textfield__error">Invalid</span>
+          </div>
+        </div>
+        <div class="mdl-cell mdl-cell--1-col">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" pattern="[0-9]+" id="attempts" value="100">
+            <label class="mdl-textfield__label" for="attempts">Atempts</label>
             <span class="mdl-textfield__error">Invalid</span>
           </div>
         </div>
@@ -86,7 +100,5 @@
   </footer>
 </div>
 
-<script src="drawer.js"></script>
 <script src="lab1.js"></script>
-<script src="lab1-starter.js"></script>
 </body>

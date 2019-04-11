@@ -7,10 +7,6 @@ var weights = [];
 var range = [];
 var numberOfNeurons = 1;
 
-function configureGraph() {
-    activateGraph();
-}
-
 function classificate() {
     const x = document.getElementById('x').value;
     const y = document.getElementById('y').value;
@@ -258,4 +254,4 @@ document.getElementById('two-neuron').addEventListener('click', twoNeuron);
 document.getElementById('train').addEventListener('click', learning);
 document.getElementById('classificate').addEventListener('click', classificate);
 
-window.addEventListener('load', configureGraph);
+window.addEventListener('load', activateGraph);

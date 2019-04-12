@@ -7,6 +7,26 @@ var weights = [];
 var range = [];
 var numberOfNeurons = 1;
 
+function classificate() {
+    const x = document.getElementById('x').value;
+    const y = document.getElementById('y').value;
+    const t = [];
+
+    for (let i = 0; i < numberOfNeurons; i++) {
+        var s = w0;
+        s += x * weights[i][0];
+        s += y * weights[i][1];
+        t.push(getType(s));
+    }
+
+    var data = {
+        x: [x],
+        y: [y],
+        color: getColor(t)
+    };
+    drawPoints([makeMarker(data)]);
+}
+
 function oneNeuron() {
     trainSet = [[-0.5, -0.5, [0]], [-0.5, 0.5, [0]], [0.3, -0.5, [1]], [-0.1, 1, [1]]];
     range = [-1, 1];
@@ -61,9 +81,11 @@ function twoNeuron() {
     drawPoints(markers);
 }
 
-async function train() {
+async function learning() {
     const speed = document.getElementById('speed').value;
-    const learningRate = document.getElementById('learningRate').value; 
+    const learningRate = document.getElementById('learningRate').value;
+    const maxNumberOfAttempts = document.getElementById('attempts').value;
+    const errorLimit = document.getElementById('limit').value;
 
     initWeights(2);
     let networkError = 0;
@@ -80,11 +102,11 @@ async function train() {
                     s += trainSet[i][k] * weights[j][k];
                 }
                 let type = getType(s);
-                networkError = trainSet[i][2][j] - type;
+                networkError = Math.pow(trainSet[i][2][j] - type, 2);
                 errors.push(networkError);
                 let alpha = Math.floor(counter / 10) + 1;
                 for (let k = 0; k < weights[j].length; k++) {
-                    weights[j][k] += learningRate / alpha * trainSet[i][k] * networkError;
+                    weights[j][k] += learningRate / alpha * trainSet[i][k] * (trainSet[i][2][j] - type);
                 }
             }
             
@@ -92,12 +114,13 @@ async function train() {
         }
         networkError = 0;
         for (let i = 0; i < errors.length; i++) {
-            networkError += Math.abs(errors[i]);
+            networkError += errors[i];
         }
+        networkError /= errors.length
         counter++;
-    } while(networkError > 0 && counter < 100);
+    } while(networkError > errorLimit && counter < maxNumberOfAttempts);
 
-    if (counter != 100) {
+    if (counter != maxNumberOfAttempts) {
         alert("Learning successfully completed");
     } else {
         alert("Learning got stuck");
@@ -229,32 +252,7 @@ function deleteLines() {
 document.getElementById('one-neuron').addEventListener('click', oneNeuron);
 document.getElementById('xor-problem').addEventListener('click', xorProblem);
 document.getElementById('two-neuron').addEventListener('click', twoNeuron);
-document.getElementById('train').addEventListener('click', train);
+document.getElementById('train').addEventListener('click', learning);
 document.getElementById('classificate').addEventListener('click', classificate);
 
-window.addEventListener('load', configureGraph);
-
-
-function configureGraph() {
-    activateGraph();
-}
-
-function classificate() {
-    const x = document.getElementById('x').value;
-    const y = document.getElementById('y').value;
-    const t = [];
-
-    for (let i = 0; i < numberOfNeurons; i++) {
-        var s = w0;
-        s += x * weights[i][0];
-        s += y * weights[i][1];
-        t.push(getType(s));
-    }
-
-    var data = {
-        x: [x],
-        y: [y],
-        color: getColor(t)
-    };
-    drawPoints([makeMarker(data)]);
-}
+window.addEventListener('load', activateGraph);

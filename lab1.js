@@ -102,11 +102,11 @@ async function learning() {
                     s += trainSet[i][k] * weights[j][k];
                 }
                 let type = getType(s);
-                networkError = trainSet[i][2][j] - type;
+                networkError = Math.pow(trainSet[i][2][j] - type, 2);
                 errors.push(networkError);
                 let alpha = Math.floor(counter / 10) + 1;
                 for (let k = 0; k < weights[j].length; k++) {
-                    weights[j][k] += learningRate / alpha * trainSet[i][k] * networkError;
+                    weights[j][k] += learningRate / alpha * trainSet[i][k] * (trainSet[i][2][j] - type);
                 }
             }
             
@@ -114,8 +114,9 @@ async function learning() {
         }
         networkError = 0;
         for (let i = 0; i < errors.length; i++) {
-            networkError += Math.abs(errors[i]);
+            networkError += errors[i];
         }
+        networkError /= errors.length
         counter++;
     } while(networkError > errorLimit && counter < maxNumberOfAttempts);
 

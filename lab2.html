@@ -31,22 +31,29 @@
           <div class="mdl-cell mdl-cell--1-col"></div>
           <div class="mdl-cell mdl-cell--1-col">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="text" pattern="0(\.0([0-4][0-9]*)?5?)?" id="deltaT" value="0.05">
+              <input class="mdl-textfield__input" type="text" pattern="0(\.0([0-4][0-9]*)?5?)?" id="deltaT" value="0.01">
               <label class="mdl-textfield__label" for="deltaT">&Delta;t</label>
               <span class="mdl-textfield__error">Invalid</span>
             </div>
           </div>
           <div class="mdl-cell mdl-cell--1-col">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="text" pattern="[3-7]" id="k" value="7" title="From 3 to 7">
+              <input class="mdl-textfield__input" type="text" pattern="[3-7]" id="k" value="3" title="From 3 to 7">
               <label class="mdl-textfield__label" for="k">Number of previous values</label>
+              <span class="mdl-textfield__error">Invalid</span>
+            </div>
+          </div>
+          <div class="mdl-cell mdl-cell--1-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" pattern="0\.[0-9]*[1-9]" id="learning-rate" value="0.1">
+              <label class="mdl-textfield__label" for="learning-rate">Learning rate</label>
               <span class="mdl-textfield__error">Invalid</span>
             </div>
           </div>
         </div>
         <div class="mdl-grid">
-          <div id="signal-graph" class="mdl-cell mdl-cell--7-col an-small-chart"></div>
-          <div id="error-graph" class="mdl-cell mdl-cell--5-col an-small-chart"></div>
+          <div id="signal-graph" class="mdl-cell mdl-cell--8-col an-small-chart"></div>
+          <div id="error-graph" class="mdl-cell mdl-cell--3-col an-small-chart"></div>
         </div>
         <div class="mdl-grid">
           <div class="mdl-cell mdl-cell--1-col"></div>

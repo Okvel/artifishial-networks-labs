@@ -48,3 +48,12 @@
 .an-full-width {
     width: 100%;
 }
+
+.an-cube-1024 {
+    width: 1024px;
+    height: 1024px;
+}
+
+.an-heigth-256 {
+    height: 256px;
+}

@@ -5,7 +5,6 @@ const k = parseInt(document.getElementById('k').value);
 
 var errors = [];
 var w = [];
-var deltaW = [];
 
 function configureGraphs() {
     activateGraph(signalGraphId, {
@@ -95,9 +94,10 @@ function getX(t) {
 function learning(x) {
     initWeights(k);
     let i = 0;
-    let error = 0;
+    let doNext = true;
     errors = [];
     do {
+        let error = 0;
         let s = 0;
         const inputs = getInputs(x, i, k);
         for (let j = 0; j < k; j++) {
@@ -106,8 +106,12 @@ function learning(x) {
         error = Math.pow(x[i + k] - s, 2);
         errors.push(error);
         
-        for (let j = 0; j < w.length; j++) {
-            w[j] += parseFloat(document.getElementById('learning-rate').value) * inputs[j] * (x[i + k] - s);
+        if (error > Math.pow(10, -3)) {
+            for (let j = 0; j < w.length; j++) {
+                w[j] += parseFloat(document.getElementById('learning-rate').value) * inputs[j] * (x[i + k] - s);
+            }
+        } else {
+            doNext = false;
         }
 
         errors.push(error);
@@ -115,7 +119,7 @@ function learning(x) {
         if (i == x.length) {
             i = 0;
         }
-    } while(error > Math.pow(10, -3));
+    } while(doNext);
 }
 
 function initWeights(n) {

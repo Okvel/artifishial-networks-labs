@@ -75,7 +75,7 @@ function normalise(x) {
     return res;
 }
 
-async function doSelfLearning(inputs) {
+function doSelfLearning(inputs) {
     let limit = 250;
     let normX = inputs.norm;
 
@@ -173,10 +173,6 @@ function fillClusters(x, winners) {
         clusters[winners[i]].x.push(x[i][0]);
         clusters[winners[i]].y.push(x[i][1]);
     }
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function classificate() {

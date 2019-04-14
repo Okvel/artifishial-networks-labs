@@ -213,3 +213,59 @@ function drawChart(data) {
 
 window.addEventListener('load', activateGraph)
 document.getElementById('start').addEventListener('click', execute);
+document.getElementById('tf').addEventListener('click', useTF);
+
+function useTF() {
+    numOfNeurons = parseInt(document.getElementById('n').value);
+    const t = getT(parseFloat(document.getElementById('step').value));
+    const y = getY(t);
+    simTF(t, y);
+}
+
+async function simTF(t, y) {
+    document.getElementById('loader').style.display = 'block';
+    let lr = parseFloat(document.getElementById('learning-rate').value);
+
+    const model = tf.sequential();
+    model.add(tf.layers.dense({
+        units: numOfNeurons,
+        activation: 'sigmoid',
+        inputShape: [1],
+        biasInitializer: tf.initializers.randomUniform({
+            minval: -0.5,
+            maxval: 0.5
+        })
+    }));
+    model.add(tf.layers.dense({
+        units: 1,
+        activation: 'linear'
+    }));
+    const optimizer = tf.train.sgd(lr);
+    model.compile({
+        loss: 'meanSquaredError',
+        optimizer: optimizer
+    });
+
+    await model.fit(tf.tensor(t), tf.tensor(y), {
+        epochs: 600
+    });
+
+    let out = [];
+    let modelOut = (await model.predict(tf.tensor(t)).array());
+    for (let i = 0; i < modelOut.length; i++) {
+        out.push(modelOut[i][0]);
+    }
+    document.getElementById('loader').style.display = 'none';
+
+    clearGraph();
+    drawChart({
+        x: t,
+        y: y,
+        name: 'ideal chart'
+    });
+    drawChart({
+        x: t,
+        y: out,
+        name: 'approximated chart'
+    });
+}

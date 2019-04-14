@@ -6,6 +6,8 @@
   <link rel="stylesheet" href="style.css">
   <script src="lib/plotly-latest.min.js"></script>
   <script src="lib/material.min.js" type="text/javascript"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script> -->
+  <script src="lib/tf.min.js"></script>
 </head>
 <body>
 <div class="mdl-layout mdl-js-layout">
@@ -26,42 +28,46 @@
   </header>
 
   <main class="mdl-layout__content">
-      <div id="graph_block">
-        <div class="mdl-grid">
-          <div class="mdl-cell mdl-cell--1-col"></div>
-          <div class="mdl-cell mdl-cell--1-col">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="text" pattern="[1-9]+[0-9]*" id="n" value="4">
-              <label class="mdl-textfield__label" for="n">Number of neurons</label>
-              <span class="mdl-textfield__error">Invalid</span>
-            </div>
-          </div>
-          <div class="mdl-cell mdl-cell--1-col">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="text" pattern="0\.[0-9]*[1-9]" id="step" value="0.1">
-              <label class="mdl-textfield__label" for="step">&Delta;t</label>
-              <span class="mdl-textfield__error">Invalid</span>
-            </div>
-          </div>
-          <div class="mdl-cell mdl-cell--1-col">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="text" pattern="0\.[0-9]*[1-9]" id="learning-rate" value="0.05">
-              <label class="mdl-textfield__label" for="learning-rate">Learning rate</label>
-              <span class="mdl-textfield__error">Invalid</span>
-            </div>
+    <div id="loader"></div>
+    <div id="graph_block">
+      <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--1-col"></div>
+        <div class="mdl-cell mdl-cell--1-col">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" pattern="[1-9]+[0-9]*" id="n" value="4">
+            <label class="mdl-textfield__label" for="n">Number of neurons</label>
+            <span class="mdl-textfield__error">Invalid</span>
           </div>
         </div>
-        <div class="mdl-grid">
-          <div class="mdl-cell mdl-cell--1-col"></div>
-          <div id="graph" class="mdl-cell mdl-cell--10-col gec-small-chart"></div>
-        </div>
-        <div class="mdl-grid">
-          <div class="mdl-cell mdl-cell--1-col"></div>
-          <div class="mdl-cell mdl-cell--1-col">
-            <button id="start" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored gec-main-nav-button mdl-color--brown">Train</button>
+        <div class="mdl-cell mdl-cell--1-col">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" pattern="0\.[0-9]*[1-9]" id="step" value="0.1">
+            <label class="mdl-textfield__label" for="step">&Delta;t</label>
+            <span class="mdl-textfield__error">Invalid</span>
           </div>
         </div>
-      </div>  
+        <div class="mdl-cell mdl-cell--1-col">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" pattern="0\.[0-9]*[1-9]" id="learning-rate" value="0.05">
+            <label class="mdl-textfield__label" for="learning-rate">Learning rate</label>
+            <span class="mdl-textfield__error">Invalid</span>
+          </div>
+        </div>
+      </div>
+      <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--1-col"></div>
+        <div id="graph" class="mdl-cell mdl-cell--10-col gec-small-chart"></div>
+      </div>
+      <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--1-col"></div>
+        <div class="mdl-cell mdl-cell--1-col">
+          <button id="start" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored gec-main-nav-button mdl-color--brown">Train</button>
+        </div>
+        <div class="mdl-cell mdl-cell--2-col">
+          <button id="tf" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored gec-main-nav-button mdl-color--brown">Use TensorFlow</button>
+        </div>
+      </div>
+    </div>  
   </main>
 
   <footer class="mdl-mini-footer">
